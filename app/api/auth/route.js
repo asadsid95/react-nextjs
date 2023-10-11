@@ -1,5 +1,20 @@
-export async function POST(req) {
-  console.log("hello");
+// export async function POST(req) {
+//   // const message = await req.json();
 
-  return 0;
+//   // console.log(message);
+
+//   return new Response("hello");
+// }
+
+export async function GET() {
+  // const { message } = await req.json();
+  // const message = {
+  //   message: "hello",
+  // };
+
+  // await message.json();
+
+  // console.log(message);
+  console.log("hello");
+  return new Response();
 }
