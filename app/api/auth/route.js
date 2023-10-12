@@ -11,6 +11,20 @@ import bcrypt from "bcrypt";
 // how to check for multiple client instances
 export const db = new PrismaClient();
 
+{
+  /* Failed to destructing the data: This is to try receiving FormData interface as request 
+export async function POST(req) {
+  // const { data } = req.json();
+
+  console.log(Object.fromEntries(req.entries()));
+
+  return NextResponse.json({
+    message: "This is testing formData interface as req",
+  });
+}
+*/
+}
+
 export async function POST(req) {
   let { username, email, password } = await req.json();
 

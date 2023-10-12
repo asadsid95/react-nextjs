@@ -18,8 +18,6 @@ export default function Auth() {
     e.preventDefault();
 
     try {
-      // how to send form data to route handler at '/api/auth'
-
       // constructs set of k/v pairs of form fields and values
       const formData = new FormData(e.target);
 
@@ -32,7 +30,17 @@ export default function Auth() {
       console.log(err);
     }
 
-    // response();
+    response();
+
+    /* This is to try sending formData interface to route handler    
+ try {
+      const data = new FormData(e.target);
+
+      const response = await axios.post("/api/auth", data);
+    } catch (err) {
+      console.log(err);
+    }
+ */
     setFormData({
       username: "",
       email: "",
