@@ -13,11 +13,14 @@ export const db = new PrismaClient();
 
 export async function POST(req) {
   let { username, email, password } = await req.json();
-  password = await bcrypt.hash(password, 10);
 
-  console.log("encrypted password: ", password);
+  // generate salt and then hash
+  let salt = await bcrypt.genSalt(10);
+  // console.log(salt);
+  // let hashedUsername = await bcrypt.hash(username, salt);
+  let hashedPassword = await bcrypt.hash(password, salt);
 
-  // check if user exists
+  // check if user exists; username is now encrypted
   const isUserCreated = await db.users.findFirst({
     where: {
       username: username,
@@ -37,7 +40,7 @@ export async function POST(req) {
       data: {
         username: username,
         email: email,
-        password: password,
+        password: hashedPassword,
       },
     });
     return NextResponse.json(createUser);
