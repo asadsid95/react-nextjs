@@ -1,21 +1,33 @@
+import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
+
+// function prismaClient() {
+//   const prisma = new PrismaClient();
+
+//   return prisma;
+// }
+
+export const db = new PrismaClient();
+
 export async function POST(req) {
-  // const message = await req.json();
+  try {
+    const { username, email, password } = await req.json();
 
-  // console.log(message);
-  console.log(req);
+    const createUser = await db.users.create({
+      data: {
+        username: username,
+        email: email,
+        password: password,
+      },
+    });
 
-  return new Response("hello");
+    return NextResponse.json(createUser);
+  } catch (err) {
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+  }
 }
 
 export async function GET() {
-  // const { message } = await req.json();
-  // const message = {
-  //   message: "hello",
-  // };
-
-  // await message.json();
-
-  // console.log(message);
   console.log("hello");
   return new Response();
 }

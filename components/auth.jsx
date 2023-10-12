@@ -14,26 +14,25 @@ export default function Auth() {
 
   const router = useRouter();
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    // how to send form data to route handler at '/api/auth'
+    try {
+      // how to send form data to route handler at '/api/auth'
 
-    // constructs set of k/v pairs of form fields and values
-    const formData = new FormData(e.target);
+      // constructs set of k/v pairs of form fields and values
+      const formData = new FormData(e.target);
 
-    console.log(Object.fromEntries(formData.entries()));
+      const refined_formData = Object.fromEntries(formData.entries());
 
-    const response = async () => {
-      try {
-        await axios.post("/api/auth", formData);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      const response = await axios.post("/api/auth", refined_formData);
 
-    response();
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
 
+    // response();
     setFormData({
       username: "",
       email: "",
@@ -79,6 +78,7 @@ export default function Auth() {
           <input
             placeholder="password"
             name="password"
+            type="password"
             value={formData.password}
             onChange={(e) => {
               setFormData({
