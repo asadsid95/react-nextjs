@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
 // function prismaClient() {
 //   const prisma = new PrismaClient();
@@ -7,12 +8,31 @@ import { NextResponse } from "next/server";
 //   return prisma;
 // }
 
+// how to check for multiple client instances
 export const db = new PrismaClient();
 
 export async function POST(req) {
-  try {
-    const { username, email, password } = await req.json();
+  let { username, email, password } = await req.json();
+  password = await bcrypt.hash(password, 10);
 
+  console.log("encrypted password: ", password);
+
+  // check if user exists
+  const isUserCreated = await db.users.findFirst({
+    where: {
+      username: username,
+    },
+  });
+
+  if (isUserCreated) {
+    return NextResponse.json(
+      { message: "User is already created" },
+      { status: 409 }
+    );
+  }
+
+  // create new user
+  try {
     const createUser = await db.users.create({
       data: {
         username: username,
@@ -20,7 +40,6 @@ export async function POST(req) {
         password: password,
       },
     });
-
     return NextResponse.json(createUser);
   } catch (err) {
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });
@@ -28,6 +47,6 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  console.log("hello");
+  console.log("from GET");
   return new Response();
 }
