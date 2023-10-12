@@ -1,38 +1,46 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
-// import { useState } from "react";
+import { useState } from "react";
 
 export default function Auth() {
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   email: "",
-  //   password: "",
-  // });
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const router = useRouter();
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     // how to send form data to route handler at '/api/auth'
 
-    // setFormData({
-    //   username: "",
-    //   email: "",
-    //   password: "",
-    // });
+    // constructs set of k/v pairs of form fields and values
+    const formData = new FormData(e.target);
 
-    // console.log(e);
+    console.log(Object.fromEntries(formData.entries()));
 
     const response = async () => {
       try {
-        await axios.get("/api/auth");
+        await axios.post("/api/auth", formData);
       } catch (err) {
         console.log(err);
       }
     };
 
     response();
+
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+    });
+
+    router.replace("/");
   };
 
   return (
@@ -43,12 +51,13 @@ export default function Auth() {
           <input
             placeholder="Username"
             name="username"
-            // onChange={(e) => {
-            //   setFormData({
-            //     ...formData,
-            //     username: e.target.value,
-            //   });
-            // }}
+            value={formData.username}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                username: e.target.value,
+              });
+            }}
           />
         </div>
         <div>
@@ -56,12 +65,13 @@ export default function Auth() {
           <input
             placeholder="email"
             name="email"
-            // onChange={(e) => {
-            //   setFormData({
-            //     ...formData,
-            //     email: e.target.value,
-            //   });
-            // }}
+            value={formData.email}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                email: e.target.value,
+              });
+            }}
           />
         </div>
         <div>
@@ -69,12 +79,13 @@ export default function Auth() {
           <input
             placeholder="password"
             name="password"
-            // onChange={(e) => {
-            //   setFormData({
-            //     ...formData,
-            //     password: e.target.value,
-            //   });
-            // }}
+            value={formData.password}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                password: e.target.value,
+              });
+            }}
           />
         </div>
         <button className="bg-blue-600 p-3 " type="submit">

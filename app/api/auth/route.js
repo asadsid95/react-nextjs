@@ -1,10 +1,11 @@
-// export async function POST(req) {
-//   // const message = await req.json();
+export async function POST(req) {
+  // const message = await req.json();
 
-//   // console.log(message);
+  // console.log(message);
+  console.log(req);
 
-//   return new Response("hello");
-// }
+  return new Response("hello");
+}
 
 export async function GET() {
   // const { message } = await req.json();
