@@ -14,6 +14,7 @@ export default function Auth() {
 
   const router = useRouter();
 
+  // For user authentication
   const onSubmit = async (e) => {
     e.preventDefault();
 
