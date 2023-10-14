@@ -19,9 +19,16 @@ export default function AuthSession() {
 
     // console.log(refined_formData);
     try {
-      await axios.post("/api/auth_session", refined_formData);
+      console.log(
+        "reading cookie from client BEFORE route handler: ",
+        document.cookie
+      );
+      const response = await axios.post("/api/auth_session", refined_formData);
 
-      console.log(document.cookie);
+      console.log(
+        "reading cookie from client AFTER route handler: ",
+        document.cookie
+      );
     } catch (err) {
       console.log("[ROUTE_HANDLER_ERROR]: ", err);
     }
