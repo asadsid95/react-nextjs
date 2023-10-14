@@ -24,6 +24,8 @@ export default function Auth() {
 
       const refined_formData = Object.fromEntries(formData.entries());
 
+      console.log(refined_formData);
+
       const response = await axios.post("/api/auth", refined_formData);
 
       console.log(response);
