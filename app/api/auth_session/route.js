@@ -7,11 +7,7 @@ export async function POST(req) {
     const data = await req.json();
 
     console.log(data);
-    return NextResponse.json(
-      { message: "success" },
-      { data }
-      //   { cookies: "yoooo=hello" }
-    );
+    return NextResponse.json({ message: "success" }, { data });
   } catch (err) {
     console.log("[SERVER_ERROR]", err);
   }
